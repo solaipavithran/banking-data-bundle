@@ -1,0 +1,28 @@
+
+name: Banking Bundle CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-bundle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Verify bundle files
+        run: |
+          test -f databricks.yaml
+          test -f resources/banking_job.yaml
+          test -f notebooks/01_ingest_banking.ipynb
+          test -f notebooks/borrower_details.ipynb
+          test -f notebooks/loan_details.ipynb
