@@ -1,0 +1,23 @@
+resources:
+  jobs:
+    banking_data_workflow:
+      name: banking_data_workflow
+      tasks:
+        - task_key: ingesting_master_data
+          notebook_task:
+            notebook_path: ../notebooks/01_ingest_banking.ipynb
+        - task_key: borrower_details
+          depends_on:
+            - task_key: ingesting_master_data
+          notebook_task:
+            notebook_path: ../notebooks/borrower_details.ipynb
+            base_parameters:
+              min_income: "100"
+              bronze_count: "{{tasks.ingesting_master_data.values.bronze_count}}"
+        - task_key: loan_details
+          depends_on:
+            - task_key: ingesting_master_data
+          notebook_task:
+            notebook_path: ../notebooks/loan_details.ipynb
+            
+

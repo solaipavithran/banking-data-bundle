@@ -1,0 +1,14 @@
+
+bundle:
+  name: banking_data_bundle
+
+include:
+  - resources/*.yaml
+
+targets:
+  dev:
+    mode: development
+    default: true
+
+  prod:
+    mode: production
